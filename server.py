@@ -1,5 +1,7 @@
 from flask import Flask
 
+import models
+
 DEBUGGER = True
 PORT = 8000
 
@@ -15,6 +17,7 @@ def test_route():
 
 
 if __name__ =='__main__':
+	models.switch_on_db()
 	app.run(debug=DEBUGGER, port=PORT)
 
 
