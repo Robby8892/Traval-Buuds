@@ -33,11 +33,11 @@ def create_post():
 
 
 @posts.route('/', methods=['GET'])
-def posts_index():
+def logged_in_posts_index():
+
 
 	current_user_posts = [model_to_dict(post) for post in current_user.posts]
 
-	print(current_user_posts)
 
 	for post in current_user_posts:
 		post['photo'] = post['photo'].decode('utf8').replace("",'')
@@ -45,13 +45,33 @@ def posts_index():
 		post['user'].pop('password')
 
 
-
-
 	return jsonify(
 		data=current_user_posts,
 		message=f'You have retrived all posts by {current_user.email}, there is a total of {len(current_user_posts)}',
 		status=200
 		), 200
+
+@posts.route('/other_users', methods=['GET'])
+def other_users_posts():
+
+	
+	posts = models.Post.select().where(models.Post.user_id != current_user.id).dicts()
+
+	post_dicts = []
+
+	for post in posts:
+		post['photo'] = post['photo'].decode('utf8').replace("",'')
+		print('_' * 20)
+
+		post_dicts.append(post)
+
+	return jsonify(
+		data=post_dicts,
+		message='Here is a list of all of , posts ',
+		status=200
+		), 200
+
+
 
 @posts.route('/<id>', methods=['GET'])
 def posts_show(id):
