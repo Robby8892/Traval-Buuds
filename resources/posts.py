@@ -54,7 +54,6 @@ def logged_in_posts_index():
 @posts.route('/other_users', methods=['GET'])
 def other_users_posts():
 
-	
 	posts = models.Post.select().where(models.Post.user_id != current_user.id).dicts()
 
 	post_dicts = []
@@ -102,3 +101,41 @@ def posts_show(id):
 			message='You have retrived post id number {}, by, {} '.format(id, post_dict['user']['username']),
 			status=200
 			), 200
+
+# delete route for posts
+@posts.route('/<id>', methods=['Delete'])
+@login_required
+def delete_post(id):
+
+	post_to_delete = models.Post.get_by_id(id)
+
+
+	try: 
+		if current_user.id == post_to_delete.user.id:
+			post_to_delete.delete_instance()
+
+			return jsonify(
+				data={},
+				message='You have deleted post id # {}'.format(post_to_delete.id),
+				status=200
+				), 200
+
+		else:	
+			return jsonify(
+				data={
+				'error': 'Forbidden'
+				},
+				message='You are not allowed to delete this post',
+				status=403,
+				), 403
+				
+
+	except models.DoesNotExist:	
+		
+		return jsonify(
+			data={
+			'error': 'Forbidden'
+			},
+			message='You are not allowed to delete this post',
+			status=403,
+			), 403
