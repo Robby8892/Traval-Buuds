@@ -131,11 +131,61 @@ def delete_post(id):
 				
 
 	except models.DoesNotExist:	
-		
+
 		return jsonify(
 			data={
 			'error': 'Forbidden'
 			},
 			message='You are not allowed to delete this post',
+			status=403,
+			), 403
+
+@posts.route('/<id>', methods=['PUT'])
+@login_required
+def update_post(id):
+
+	payload = request.get_json()
+
+	post_to_update = models.Post.get_by_id(id)
+		
+
+	try: 
+
+		if current_user.id == post_to_update.user.id:
+
+			post_to_update.title = payload['title'] if 'title' else None
+			post_to_update.place = payload['place'] if 'place' else None
+			post_to_update.photo = payload['photo'] if 'photo' else None
+			post_to_update.story = payload['story'] if 'breed' else None
+
+			post_to_update.save()
+
+			post_dict = model_to_dict(post_to_update)
+
+			post_dict['user'].pop('password')
+
+			return jsonify(
+				data=post_dict,
+				message='You have updated post id # {}'.format(post_to_update.id),
+				status=200
+				), 200
+
+		else:	
+			return jsonify(
+				data={
+				'error': 'Forbidden'
+				},
+				message='You are not allowed to update this post',
+				status=403,
+				), 403
+			
+
+	except models.DoesNotExist:	
+
+		return jsonify(
+			data={
+			'error': 'Forbidden'
+			},
+			message='You are not allowed to update this post',
 			status=403,
 			), 403
