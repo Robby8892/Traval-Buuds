@@ -58,16 +58,27 @@ def posts_show(id):
 	
 	post = models.Post.get_by_id(id)
 
-	print(post)
+	if post.user.id == current_user.id:
 
-	post_dict = model_to_dict(post)
+		post_dict = model_to_dict(post)
+		post_dict['photo'] = post_dict['photo'].decode('utf8').replace("",'')
+		post_dict['user'].pop('password')
 
-	print(post_dict)
-
-	post_dict['photo'] = post_dict['photo'].decode('utf8').replace("",'')
-	post_dict['user'].pop('password')
-
-	return jsonify(
+		return jsonify(
 		data=post_dict,
-		message='You have retrived post id number {}, by, {} '.format(id, post_dict['user']['username'])
-		)
+		message=f'You have retrived your post id number {id},',
+		status=200
+		), 200
+
+	else:	
+
+		post_dict = model_to_dict(post)
+
+		post_dict['photo'] = post_dict['photo'].decode('utf8').replace("",'')
+		post_dict['user'].pop('password')
+
+		return jsonify(
+			data=post_dict,
+			message='You have retrived post id number {}, by, {} '.format(id, post_dict['user']['username']),
+			status=200
+			), 200
