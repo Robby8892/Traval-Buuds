@@ -52,3 +52,22 @@ def posts_index():
 		message=f'You have retrived all posts by {current_user.email}, there is a total of {len(current_user_posts)}',
 		status=200
 		), 200
+
+@posts.route('/<id>', methods=['GET'])
+def posts_show(id):
+	
+	post = models.Post.get_by_id(id)
+
+	print(post)
+
+	post_dict = model_to_dict(post)
+
+	print(post_dict)
+
+	post_dict['photo'] = post_dict['photo'].decode('utf8').replace("",'')
+	post_dict['user'].pop('password')
+
+	return jsonify(
+		data=post_dict,
+		message='You have retrived post id number {}, by, {} '.format(id, post_dict['user']['username'])
+		)
