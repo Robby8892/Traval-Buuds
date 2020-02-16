@@ -2,12 +2,19 @@ from flask import Flask
 
 import models
 
+from resources.users import users
+
 DEBUGGER = True
 PORT = 8000
 
 
 
 app = Flask(__name__)
+
+
+# user route imported from resources 
+
+app.register_blueprint(users, url_prefix='/api/v1/users')
 
 
 @app.route('/')
