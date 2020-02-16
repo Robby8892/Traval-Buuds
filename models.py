@@ -23,10 +23,21 @@ class User(UserMixin, Model):
 		database = DATABASE
 
 
+class Post(Model):
+	title = CharField()
+	place = CharField()
+	photo = BlobField()
+	story = CharField()
+	created_at = DateTimeField(default=datetime.datetime.now)
+	user = ForeignKeyField(User, backref='posts')
+
+	class Meta:
+		database = DATABASE
+
 def switch_on_db():
 	DATABASE.connect()
 
-	DATABASE.create_tables([User], safe=True)		
+	DATABASE.create_tables([User, Post], safe=True)		
 	print('Connection made to the db and tables created!')
 
 
