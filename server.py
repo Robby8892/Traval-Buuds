@@ -28,7 +28,7 @@ def before_request():
 	g.db.connect()
 
 @app.after_request
-def after_request():
+def after_request(response):
 	"""Will disconnect from db after request and return the response"""
 	g.db.close()
 	return response
