@@ -1,4 +1,4 @@
-from flask import Flask, g
+from flask import Flask, g, jsonify
 
 from flask_login import LoginManager
 
@@ -27,6 +27,18 @@ def load_user(user_id):
 		return models.User.get(models.User.id == user_id)
 	except modes.DoesNotExist:	
 		return None
+
+@login_manager.unauthorized_handler
+def unauthorized():
+	return jsonify(
+		data={
+		'error': 'User is not logged in'
+
+		},
+		message='You must be logged in to access that information',
+		status=401
+		),401
+
 
 @app.before_request
 def before_request():
