@@ -2,6 +2,8 @@ import os
 
 from flask import Flask, g, jsonify
 
+from flask_cors import CORS
+
 from werkzeug.utils import secure_filename
 
 from flask_login import LoginManager
@@ -61,6 +63,12 @@ def after_request(response):
 	return response
 
 
+
+# CORS for api calls
+
+CORS(users, origins=['http://localhost:3000'], supports_credentials=True)
+
+CORS(posts, origins=['http://localhost:3000'], supports_credentials=True)
 
 # user route imported from resources 
 
