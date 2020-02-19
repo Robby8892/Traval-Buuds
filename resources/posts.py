@@ -31,7 +31,7 @@ def create_post():
 		status=201
 		), 201
 
-
+# index of logged in users posts
 @posts.route('/', methods=['GET'])
 def logged_in_posts_index():
 
@@ -51,6 +51,7 @@ def logged_in_posts_index():
 		status=200
 		), 200
 
+# index of other users posts
 @posts.route('/other_users', methods=['GET'])
 def other_users_posts():
 
@@ -71,7 +72,7 @@ def other_users_posts():
 		), 200
 
 
-
+# show route 
 @posts.route('/<id>', methods=['GET'])
 def posts_show(id):
 	
