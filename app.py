@@ -66,9 +66,9 @@ def after_request(response):
 
 # CORS for api calls
 
-CORS(users, origins=['http://localhost:3000'], supports_credentials=True)
+CORS(users, origins=['http://localhost:3000', 'https://traval-buuds-react-app.herokuapp.com'], supports_credentials=True)
 
-CORS(posts, origins=['http://localhost:3000'], supports_credentials=True)
+CORS(posts, origins=['http://localhost:3000', 'https://traval-buuds-react-app.herokuapp.com'], supports_credentials=True)
 
 # user route imported from resources 
 
