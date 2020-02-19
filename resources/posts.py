@@ -41,7 +41,7 @@ def logged_in_posts_index():
 
 	if 'ON_HEROKU' in os.environ:
 		for post in current_user_posts:
-			post['photo'] = post['photo'].replace("",'')
+			post['photo'] = post['photo']
 			print('_' * 20)
 			post['user'].pop('password')
 	else: 	
@@ -68,7 +68,7 @@ def other_users_posts():
 
 	if 'ON_HEROKU' in os.environ:
 		for post in posts:
-			post['photo'] = post['photo'].replace("",'')
+			post['photo'] = post['photo']
 			print('_' * 20)
 
 			post_dicts.append(post)
@@ -99,7 +99,7 @@ def posts_show(id):
 		if 'ON_HEROKU' in os.environ:
 
 			post_dict = model_to_dict(post)
-			post_dict['photo'] = post_dict['photo'].decode('utf8').replace("",'')
+			post_dict['photo'] = post_dict['photo']
 			post_dict['user'].pop('password')
 
 		else:	
@@ -118,7 +118,7 @@ def posts_show(id):
 
 		if 'ON_HEROKU' in os.environ:
 			post_dict = model_to_dict(post)
-			post_dict['photo'] = post_dict['photo'].decode('utf8').replace("",'')
+			post_dict['photo'] = post_dict['photo']
 			post_dict['user'].pop('password')
 
 		else: 	
