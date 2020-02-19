@@ -1,10 +1,13 @@
+import os
+
 from peewee import *
 
 from flask_login import UserMixin
 
 import datetime
 
-DATABASE = SqliteDatabase('posts.sqlite')
+from playhouse.db_url import connect
+
 
 
 # 1. I will setup my user model first to setup logging in
@@ -12,6 +15,16 @@ DATABASE = SqliteDatabase('posts.sqlite')
 # and then I will drop my database and incorperate users into 
 # the post model
 # 3. Bonus! Create a comment model and my_friends models after hitting mvp
+
+
+if 'ON_HEROKU' in os.environ:
+
+	DATABASE = connect(os.environ.get('DATABASE_URL'))
+
+else:
+
+	DATABASE = SqliteDatabase('posts.sqlite')
+
 
 class User(UserMixin, Model):
 	username = CharField(unique=True)

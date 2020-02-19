@@ -82,6 +82,10 @@ def test_route():
 	return 'Hello World'
 
 
+if 'ON_HEROKU' in os.environ:
+	print('Running on Heroku!')
+	models.switch_on_db()
+
 
 if __name__ =='__main__':
 	models.switch_on_db()

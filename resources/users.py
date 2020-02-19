@@ -43,7 +43,7 @@ def register_user():
 
 		user_dict = model_to_dict(created_user)
 		user_dict.pop('password')
-		login_user(created_user)
+
 
 		return jsonify(
 			data=user_dict,
