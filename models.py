@@ -37,7 +37,7 @@ class User(UserMixin, Model):
 class Post(Model):
 	title = CharField()
 	place = CharField()
-	photo = BlobField()
+	photo = CharField()
 	story = CharField()
 	created_at = DateTimeField(default=datetime.datetime.now)
 	user = ForeignKeyField(User, backref='posts')

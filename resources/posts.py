@@ -42,11 +42,6 @@ def logged_in_posts_index():
 	for post in current_user_posts:
 		print('_' * 20)
 		post['user'].pop('password')
-		
-		if 'ON_HEROKU' in os.environ:
-			post['photo'] = post['photo']
-		else: 	
-			post['photo'] = post['photo'].decode('utf8').replace("",'')
 	
 
 	print('here is the type')
@@ -69,14 +64,7 @@ def other_users_posts():
 
 	for post in posts:
 		print('_' * 20)
-		
-		if 'ON_HEROKU' in os.environ:
-			post['photo'] = memoryview(post['photo'])
-			post_dicts.append(post)
-
-		else: 
-			post['photo'] = post['photo'].decode('utf8').replace("",'')
-			post_dicts.append(post)
+		post_dicts.append(post)
 
 	return jsonify(
 		data=post_dicts,
@@ -95,11 +83,6 @@ def posts_show(id):
 
 		post_dict = model_to_dict(post)
 		post_dict['user'].pop('password')
-		if 'ON_HEROKU' in os.environ:
-			post_dict['photo'] = post_dict['photo']
-
-		else:	
-			post_dict['photo'] = post_dict['photo'].decode('utf8').replace("",'')
 		
 
 		return jsonify(
@@ -113,10 +96,6 @@ def posts_show(id):
 		post_dict = model_to_dict(post)
 		post_dict['user'].pop('password')
 		
-		if 'ON_HEROKU' in os.environ:
-			post_dict['photo'] = post_dict['photo']
-		else: 	
-			post_dict['photo'] = post_dict['photo'].decode('utf8').replace("",'')
 
 		return jsonify(
 			data=post_dict,
