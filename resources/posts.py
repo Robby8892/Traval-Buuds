@@ -47,8 +47,11 @@ def logged_in_posts_index():
 			post['photo'] = post['photo']
 		else: 	
 			post['photo'] = post['photo'].decode('utf8').replace("",'')
+	
+	current_user_posts_dict = model_to_dict(current_user_posts)
 	print('here is the type')
-	print(type(current_user_posts))		
+	print(type(current_user_posts_dict))		
+
 	return 'check term'
 	return jsonify(
 		data=current_user_posts,
