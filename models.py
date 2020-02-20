@@ -21,7 +21,7 @@ if 'ON_HEROKU' in os.environ:
 	DATABASE = connect(os.environ.get('DATABASE_URL'))
 
 else:
-	DATABASE = SqliteDatabase('posts.sqlite')
+	DATABASE = PostgresqlDatabase('posts', user='robertocortes')
 
 
 class User(UserMixin, Model):
@@ -37,7 +37,7 @@ class User(UserMixin, Model):
 class Post(Model):
 	title = CharField()
 	place = CharField()
-	photo = CharField()
+	photo = CharField(max_length=100000)
 	story = CharField()
 	created_at = DateTimeField(default=datetime.datetime.now)
 	user = ForeignKeyField(User, backref='posts')
