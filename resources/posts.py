@@ -45,9 +45,8 @@ def logged_in_posts_index():
 	for post in current_user_posts:
 		print('_' * 20)
 		post['user'].pop('password')
-		if 'ON_HEROKU' in os.environ:
-			print(base64.b64decode(post['photo'] + '=='))
-			base64.b64decode(post['photo'] + '==')
+		print(type(post['photo']))
+		
 
 
 
