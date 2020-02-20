@@ -47,8 +47,9 @@ def logged_in_posts_index():
 			post['photo'] = post['photo']
 		else: 	
 			post['photo'] = post['photo'].decode('utf8').replace("",'')
-			
-			
+	print('here is the type')
+	print(type(current_user_posts))		
+	return 'check term'
 	return jsonify(
 		data=current_user_posts,
 		message=f'You have retrived all posts by {current_user.email}, there is a total of {len(current_user_posts)}',
