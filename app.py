@@ -1,6 +1,6 @@
 import os
 
-import cloudinary, cloudinary.uploader, cloudinary.api
+# import cloudinary, cloudinary.uploader, cloudinary.api
 
 from flask import Flask, g, jsonify
 
@@ -84,11 +84,11 @@ app.register_blueprint(users, url_prefix='/api/v1/users')
 app.register_blueprint(posts, url_prefix='/api/v1/posts')
 
 
-cloudinary.config(cloud_name='dyadlealg', api_key=os.environ['API_KEY'], api_secret=['API_SECRET'])
-
+# need to come back to cloudinary when I have time
+# cloudinary.config(cloud_name='dyadlealg', api_key=os.environ['API_KEY'], api_secret=['API_SECRET'])
 # cloudinary.uploader.upload('https://www.pexels.com/photo/adult-siberian-husky-selected-focus-803766/')
 
-print(cloudinary.uploader)
+# print(cloudinary.uploader)
 
 
 
