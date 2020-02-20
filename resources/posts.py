@@ -1,8 +1,11 @@
 import os
 import models 
 import json
+import base64
+
 from flask import Blueprint, jsonify, request
 from flask_login import current_user, login_required
+
 
 from playhouse.shortcuts import model_to_dict
 
@@ -42,7 +45,10 @@ def logged_in_posts_index():
 	for post in current_user_posts:
 		print('_' * 20)
 		post['user'].pop('password')
-	
+		if 'ON_HEROKU' in os.environ:
+			base64.b64decode(post['photo'])
+
+
 
 	print('here is the type')
 	print(type(current_user_posts))		

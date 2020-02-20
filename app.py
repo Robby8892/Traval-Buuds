@@ -1,5 +1,7 @@
 import os
 
+import cloudinary, cloudinary.uploader, cloudinary.api
+
 from flask import Flask, g, jsonify
 
 from flask_cors import CORS
@@ -13,6 +15,11 @@ import models
 from resources.users import users
 
 from resources.posts import posts
+
+
+os.environ['API_KEY'] = '599414192145716'
+os.environ['API_SECRET'] = 'XAWc70FF5oXcrspPBkdSjg9FnQg'
+os.environ['ENV_VAR'] = 'CLOUDINARY_URL=cloudinary://599414192145716:XAWc70FF5oXcrspPBkdSjg9FnQg@dyadlealg'
 
 DEBUGGER = True
 PORT = 8000
@@ -77,6 +84,20 @@ app.register_blueprint(users, url_prefix='/api/v1/users')
 app.register_blueprint(posts, url_prefix='/api/v1/posts')
 
 
+cloudinary.config(cloud_name='dyadlealg', api_key=os.environ['API_KEY'], api_secret=['API_SECRET'])
+
+# cloudinary.uploader.upload('https://www.pexels.com/photo/adult-siberian-husky-selected-focus-803766/')
+
+print(cloudinary.uploader)
+
+
+
+
+if 'API_KEY' in os.environ:
+	print('Var defined in enviorment')
+else:
+	print('there is nothing there!')	
+
 @app.route('/')
 def test_route():
 	return 'Hello World'
@@ -90,7 +111,6 @@ if 'ON_HEROKU' in os.environ:
 if __name__ =='__main__':
 	models.switch_on_db()
 	app.run(debug=DEBUGGER, port=PORT)
-
 
 
 
