@@ -39,19 +39,16 @@ def logged_in_posts_index():
 
 	current_user_posts = [model_to_dict(post) for post in current_user.posts]
 
-	if 'ON_HEROKU' in os.environ:
-		for post in current_user_posts:
+	for post in current_user_posts:
+		print('_' * 20)
+		post['user'].pop('password')
+		
+		if 'ON_HEROKU' in os.environ:
 			post['photo'] = post['photo']
-			print('_' * 20)
-			post['user'].pop('password')
-	else: 	
-
-		for post in current_user_posts:
+		else: 	
 			post['photo'] = post['photo'].decode('utf8').replace("",'')
-			print('_' * 20)
-			post['user'].pop('password')
-
-
+			
+			
 	return jsonify(
 		data=current_user_posts,
 		message=f'You have retrived all posts by {current_user.email}, there is a total of {len(current_user_posts)}',
@@ -66,24 +63,20 @@ def other_users_posts():
 
 	post_dicts = []
 
-	if 'ON_HEROKU' in os.environ:
-		for post in posts:
+	for post in posts:
+		print('_' * 20)
+		
+		if 'ON_HEROKU' in os.environ:
 			post['photo'] = post['photo']
-			print('_' * 20)
-
 			post_dicts.append(post)
 
-	else: 
-
-		for post in posts:
+		else: 
 			post['photo'] = post['photo'].decode('utf8').replace("",'')
-			print('_' * 20)
-
 			post_dicts.append(post)
 
 	return jsonify(
 		data=post_dicts,
-		message='Here is a list of all of , posts ',
+		message='Here is a list of all of the posts ',
 		status=200
 		), 200
 
@@ -96,17 +89,14 @@ def posts_show(id):
 
 	if post.user.id == current_user.id:
 
+		post_dict = model_to_dict(post)
+		post_dict['user'].pop('password')
 		if 'ON_HEROKU' in os.environ:
-
-			post_dict = model_to_dict(post)
 			post_dict['photo'] = post_dict['photo']
-			post_dict['user'].pop('password')
 
 		else:	
-
-			post_dict = model_to_dict(post)
 			post_dict['photo'] = post_dict['photo'].decode('utf8').replace("",'')
-			post_dict['user'].pop('password')
+		
 
 		return jsonify(
 		data=post_dict,
@@ -116,15 +106,13 @@ def posts_show(id):
 
 	else:	
 
+		post_dict = model_to_dict(post)
+		post_dict['user'].pop('password')
+		
 		if 'ON_HEROKU' in os.environ:
-			post_dict = model_to_dict(post)
 			post_dict['photo'] = post_dict['photo']
-			post_dict['user'].pop('password')
-
 		else: 	
-			post_dict = model_to_dict(post)
 			post_dict['photo'] = post_dict['photo'].decode('utf8').replace("",'')
-			post_dict['user'].pop('password')
 
 		return jsonify(
 			data=post_dict,
