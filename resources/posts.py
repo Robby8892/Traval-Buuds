@@ -71,7 +71,7 @@ def other_users_posts():
 		print('_' * 20)
 		
 		if 'ON_HEROKU' in os.environ:
-			post['photo'] = post['photo']
+			post['photo'] = memoryview(post['photo'])
 			post_dicts.append(post)
 
 		else: 
